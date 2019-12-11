@@ -154,10 +154,10 @@ class Renderer: NSObject, MTKViewDelegate {
     var time: Float = 0
 
     var drawCounter: Int = 0
-    var saveFile = false
+    var saveFile = true
+    var saveCount = 5
     var moveCamera = false
-    // 0: normal shader 1: diff specular separarted shader 2: base color shader
-    
+
     init(view: MTKView, device: MTLDevice) {
         self.device = device
         commandQueue = device.makeCommandQueue()!
@@ -226,8 +226,8 @@ class Renderer: NSObject, MTKViewDelegate {
         
         let vertexFunction = library.makeFunction(name: "vertex_main")
         //let fragmentFunction = library.makeFunction(name: "fragment_main")
-        //let fragmentFunction = library.makeFunction(name: "diff_specular_fragment_main"
-        let fragmentFunction = library.makeFunction(name: "base_fragment_main")
+        let fragmentFunction = library.makeFunction(name: "diff_specular_fragment_main")
+        //let fragmentFunction = library.makeFunction(name: "base_fragment_main")
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
@@ -371,7 +371,7 @@ class Renderer: NSObject, MTKViewDelegate {
         }
 
         if (saveFile) {
-            if (drawCounter <= 1000) {
+            if (drawCounter <= saveCount) {
                 let frame_texture = view.currentDrawable!.texture
                 var filename = "\(drawCounter).png"
                 drawCounter += 1

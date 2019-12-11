@@ -12,13 +12,13 @@ class CameraController {
     
     //var radius: Float = 3
     // Mim: 1 Max: 25
-    var radius: Float = 1.5
+    var radius: Float = 3
     var sensitivity: Float = 0.01
     let minAltitude: Float = -.pi / 4
     let maxAltitude: Float = .pi / 2
     
     private var altitude: Float = 0
-    private var azimuth: Float = 0
+    private var azimuth: Float = 0.5
 
     private var lastPoint: CGPoint = .zero
     
