@@ -52,30 +52,59 @@ fake_diff = gan_base_diff.g_BA.predict(base_img)
 fake_spec = gan_diff_specular.g_BA.predict(fake_diff)
 #fake_spec = gan_diff_specular.g_BA.predict(diff_img)
 
-gen_imgs = np.concatenate([base_img, fake_diff, diff_img, fake_spec, real_spec_img])
+imgs = []
 
-gen_imgs = 0.5 * gen_imgs + 0.5
-gen_imgs = np.clip(gen_imgs, 0, 1)
-
-#r_chan2 = gen_imgs[0, :, 0]
-#np_r_chan2 = np.array(r_chan2)
-#img2 = np_r_chan2.flatten()
-
-#np_base_img = np.array(base_img)
-#np_base_img = np.squeeze(np_base_img)
-#np_base_img = np_base_img[:, :, 0]
-#img2 = np_base_img.flatten()
-#img2 = 0.5 * img2 + 0.5
-#img2 = np.clip(img2, 0, 1)
+real_diff = np.array(diff_img)
+real_diff = np.squeeze(real_diff)
+real_diff = 0.5 * real_diff + 0.5
+real_diff = np.clip(real_diff, 0, 1)
+# red channel
+real_diff_r = real_diff[:, :, 0]
+real_diff_r = real_diff_r.flatten()
+imgs.append(real_diff_r)
+# green channel
+real_diff_g = real_diff[:, :, 1]
+real_diff_g = real_diff_g.flatten()
+imgs.append(real_diff_g)
+# blue channel
+real_diff_b = real_diff[:, :, 2]
+real_diff_b = real_diff_b.flatten()
+imgs.append(real_diff_b)
 
 fake_diff = np.array(fake_diff)
 fake_diff = np.squeeze(fake_diff)
-fake_diff = fake_diff[:, :, 0]
-fake_diff = fake_diff.flatten()
 fake_diff = 0.5 * fake_diff + 0.5
 fake_diff = np.clip(fake_diff, 0, 1)
+# red channel
+fake_diff_r = fake_diff[:, :, 0]
+fake_diff_r = fake_diff_r.flatten()
+imgs.append(fake_diff_r)
+# green channel
+fake_diff_g = fake_diff[:, :, 1]
+fake_diff_g = fake_diff_g.flatten()
+imgs.append(fake_diff_g)
+# blue channel
+fake_diff_b = fake_diff[:, :, 2]
+fake_diff_b = fake_diff_b.flatten()
+imgs.append(fake_diff_b)
 
-#plt.plot(img2)
-plt.hist(fake_diff, bins='auto')
-plt.title("Histogram with 'auto' bins")
+r, c = 2, 3
+titles = ['3D Diff Red', '3D Diff Green', '3D Diff Blue', 'GAN Diff Red', 'GAN Diff Green', 'GAN Diff Blue']
+fig, axs = plt.subplots(r, c, figsize=(25,6))
+cnt = 0
+for i in range(r):
+    for j in range(c):
+        if j == 0:
+            axs[i,j].hist(imgs[cnt], bins='auto', color='red')
+        elif j == 1:
+            axs[i, j].hist(imgs[cnt], bins='auto', color='green')
+        else:
+            axs[i, j].hist(imgs[cnt], bins='auto', color='blue')
+        axs[i, j].set_title(titles[(i*c)+j])
+        #axs[i,j].axis('off')
+        cnt += 1
+
+fig.savefig("histo.png")
 plt.show()
+plt.close()
+
