@@ -89,7 +89,7 @@ fake_diff_b = fake_diff_b.flatten()
 imgs.append(fake_diff_b)
 
 r, c = 2, 3
-titles = ['3D Diff Red', '3D Diff Green', '3D Diff Blue', 'GAN Diff Red', 'GAN Diff Green', 'GAN Diff Blue']
+titles = ['3D Diffuse Red', '3D Diffuse Green', '3D Diffuse Blue', 'GAN Diffuse Red', 'GAN Diffuse Green', 'GAN Diffuse Blue']
 fig, axs = plt.subplots(r, c, figsize=(25,6))
 cnt = 0
 for i in range(r):
@@ -104,7 +104,62 @@ for i in range(r):
         #axs[i,j].axis('off')
         cnt += 1
 
-fig.savefig("histo.png")
+fig.savefig("histo_diff.png")
+
+imgs = []
+
+real_diff = np.array(real_spec_img)
+real_diff = np.squeeze(real_diff)
+real_diff = 0.5 * real_diff + 0.5
+real_diff = np.clip(real_diff, 0, 1)
+# red channel
+real_diff_r = real_diff[:, :, 0]
+real_diff_r = real_diff_r.flatten()
+imgs.append(real_diff_r)
+# green channel
+real_diff_g = real_diff[:, :, 1]
+real_diff_g = real_diff_g.flatten()
+imgs.append(real_diff_g)
+# blue channel
+real_diff_b = real_diff[:, :, 2]
+real_diff_b = real_diff_b.flatten()
+imgs.append(real_diff_b)
+
+fake_diff = np.array(fake_spec)
+fake_diff = np.squeeze(fake_diff)
+fake_diff = 0.5 * fake_diff + 0.5
+fake_diff = np.clip(fake_diff, 0, 1)
+# red channel
+fake_diff_r = fake_diff[:, :, 0]
+fake_diff_r = fake_diff_r.flatten()
+imgs.append(fake_diff_r)
+# green channel
+fake_diff_g = fake_diff[:, :, 1]
+fake_diff_g = fake_diff_g.flatten()
+imgs.append(fake_diff_g)
+# blue channel
+fake_diff_b = fake_diff[:, :, 2]
+fake_diff_b = fake_diff_b.flatten()
+imgs.append(fake_diff_b)
+
+r, c = 2, 3
+titles = ['3D Specular Red', '3D Specular Green', '3D Specular Blue', 'GAN Specular Red', 'GAN Specular Green', 'GAN Specular Blue']
+fig, axs = plt.subplots(r, c, figsize=(25,6))
+cnt = 0
+for i in range(r):
+    for j in range(c):
+        if j == 0:
+            axs[i,j].hist(imgs[cnt], bins='auto', color='red')
+        elif j == 1:
+            axs[i, j].hist(imgs[cnt], bins='auto', color='green')
+        else:
+            axs[i, j].hist(imgs[cnt], bins='auto', color='blue')
+        axs[i, j].set_title(titles[(i*c)+j])
+        #axs[i,j].axis('off')
+        cnt += 1
+
+fig.savefig("histo_spec.png")
+
 plt.show()
 plt.close()
 
