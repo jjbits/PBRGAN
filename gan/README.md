@@ -3,4 +3,4 @@
 * do_pbr.ipynb: Do the PBR mimic and generate MSE errors of the resluts with the originals.
 * get_histogram.py get_histogram_multiple.py: Get histograms for the images.
 
-This code is based on this reference code: [Generative Deep Learning](https://github.com/davidADSP/GDL_code)
+The original code has been referenced from here: [Generative Deep Learning](https://github.com/davidADSP/GDL_code)
