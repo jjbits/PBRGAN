@@ -7,6 +7,6 @@ CyclGan based renderer
 ### [renderer](https://github.com/jjbits/PBRGAN/tree/master/renderer)
 PBR 3D renederer
 
-[The term paper here.](https://drive.google.com/file/d/1KliorPRGsFLgd5WuppY94P-yxOk6Pnyx/view?usp=sharing)
+[The term paper here.](https://drive.google.com/open?id=1-xfheHPphIFqxxBBZNGPK8qzKhNvGiNa)
 
 ![PBRGAN output](renderer/Screenshots/result.png)
